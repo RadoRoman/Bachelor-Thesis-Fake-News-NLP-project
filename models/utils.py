@@ -1,9 +1,6 @@
 import pandas as pd
 import numpy as np
 import os
-# import sklearn
-
-
 
 def path_to_liar_dir() -> str:
     return os.getcwd() + '\\data\\liar-dataset\\'
@@ -13,11 +10,6 @@ def path_to_isot_dir() -> str:
 
 def path_to_processed_dir() -> str:
      return os.getcwd() + '\\data\\processed\\'
-
-# path for your data
-
-FAKE_ISOT = path_to_isot_dir() + "Fake.csv"
-LIAR_TEST = path_to_liar_dir() + 'test.tsv'
 
 def tsv_reader(path: str) -> pd.DataFrame:
     return pd.read_csv(path, sep='\t')

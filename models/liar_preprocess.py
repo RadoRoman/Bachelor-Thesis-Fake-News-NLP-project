@@ -10,12 +10,12 @@ def liar_clean_data(path: str) -> pd.DataFrame:
     df.columns = ['id', 'label', 'statement', 'subject', 'speaker', 'job', 'state', 'party', 'barely_true',
                             'false', 'half_true', 'mostly_true', 'pants_on_fire', 'location']
 
-    label_dict = {'pants-fire': 0, 'FALSE': 0, 'barely-true': 0, 'half-true': 1, 'mostly-true': 1, 'TRUE': 1}
+    label_dict = {'pants-fire': 0, 'FALSE': 0, 'barely-true': 0, 'half-true': 1,
+                  'mostly-true': 1,'TRUE': 1}
+    
     df['label'] = df['label'].map(label_dict)
     df = df.dropna()
     df = df.reset_index(drop=True)
-    
-
 
     df['statement'] = df['statement'].apply(clean_text)
 

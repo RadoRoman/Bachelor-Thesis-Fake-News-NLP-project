@@ -13,9 +13,6 @@ def merge_isot_df():
 
     merged_df = pd.concat([fake_df, true_df], ignore_index=True)
     merged_df = merged_df.rename(columns={'text':'statement'})
-
-    # Shuffle the rows randomly
-    merged_df = merged_df.sample(frac=1).reset_index(drop=True)
     merged_df = shuffle(merged_df)
     merged_df['statement'] = merged_df['statement'].str.replace(r'^[^-]*-\s', '', regex=True)
 
@@ -23,12 +20,9 @@ def merge_isot_df():
 
 def isot_clean_data_to_csv() -> None:
     df = merge_isot_df()
-
-    # Replace missing values with an empty string
     df = df.dropna()
     df = df.reset_index(drop=True)
 
-    # Remove any unnecessary characters or formatting
     df['statement'] = df['statement'].apply(clean_text)
 
     df.to_csv(path_to_processed_dir() + 'merged_isot_clean.csv', index=False)

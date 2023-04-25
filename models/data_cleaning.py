@@ -31,13 +31,13 @@ stemmer = PorterStemmer()
 lemmatizer = WordNetLemmatizer()
 
 def clean_text(text):
-    text = text.lower() # Convert to lowercase
+    text = text.lower()
     re.sub(r"(@\[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)|^rt|http.+?", "", text)
-    text = re.sub(r'#\w+', '', text) # Remove hashtags
-    text = re.sub(r'@\w+', '', text) # Remove mentions
-    text = re.sub(r'[^\w\s]', '', text) # Remove punctuations and special characters
-    text = ' '.join([word for word in text.split() if word not in stop_words]) # Remove stop words
-    text = ' '.join([stemmer.stem(word) for word in text.split()]) # Stem the words
+    text = re.sub(r'#\w+', '', text) # Hashtag removal
+    text = re.sub(r'@\w+', '', text) # Mentions removal
+    text = re.sub(r'[^\w\s]', '', text) # punctuations and special characters removal
+    text = ' '.join([word for word in text.split() if word not in stop_words])
+    text = ' '.join([stemmer.stem(word) for word in text.split()])
     text = ' '.join([lemmatizer.lemmatize(word) for word in text.split()])
     return text
 
