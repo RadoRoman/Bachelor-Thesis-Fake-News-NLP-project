@@ -11,26 +11,29 @@ from isot_preprocess import load_isot_clean_csv
 
 RANDOM_STATE = random.randint(1,999)
 
-# df = load_liar_clean_csv() #LIAR Data-Set
-df = load_isot_clean_csv(8500) #ISOT Data-Set
+df = load_liar_clean_csv() #LIAR Data-Set
+# df = load_isot_clean_csv(8500) #ISOT Data-Set
 
 df = df.dropna()
 df['statement'] = df['statement'].values.astype('U')
 
 # N-grams feature
-vectorizer_ngrams = CountVectorizer(ngram_range=(1,3))
+vectorizer_ngrams = CountVectorizer(ngram_range=(1,5))
 X_ngrams = vectorizer_ngrams.fit_transform(df['statement'])
 
 X_train, X_test, y_train, y_test = train_test_split(X_ngrams, df['label'], test_size=0.2, random_state=RANDOM_STATE)
 
 # MaxEnt model with params
-me_model = LogisticRegression(max_iter=10000)
+me_model = LogisticRegression()
 param_grid = {
     'C': [0.1, 1, 10],
-    'penalty': ['l2']
+    'penalty': ['l1','l2'],
+    'solver': ['lbfgs', 'sag', 'saga']
 }
 
-grid_search = GridSearchCV(estimator=me_model, param_grid=param_grid, cv=5, n_jobs=-1)
+grid_search = GridSearchCV(estimator=me_model,
+                        param_grid=param_grid, \
+                        cv=5, n_jobs=-1)
 grid_search.fit(X_train, y_train)
 
 print("Best hyperparameters: ", grid_search.best_params_)

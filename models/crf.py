@@ -71,10 +71,6 @@ def sent2features(sent):
 def sent2labels(sent):
     return [label for token, label in sent]
 
-def sent2tokens(sent):
-    return [token for token, label in sent]
-
-
 train_sents = [list(zip(train_data['statement'].iloc[i].split(), train_data['encoded_label'].astype(str).iloc[i].split())) for i in range(len(train_data))]
 X_train = [sent2features(s) for s in train_sents]
 y_train = [sent2labels(s) for s in train_sents]

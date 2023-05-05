@@ -32,13 +32,19 @@ lemmatizer = WordNetLemmatizer()
 
 def clean_text(text):
     text = text.lower()
-    re.sub(r"(@\[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)|^rt|http.+?", "", text)
+    re.sub(r"(@\[A-Za-z0-9]+)|\
+           ([^0-9A-Za-z \t])|\
+           (\w+:\/\/\S+)|\
+           ^rt|http.+?", "", text)
     text = re.sub(r'#\w+', '', text) # Hashtag removal
     text = re.sub(r'@\w+', '', text) # Mentions removal
-    text = re.sub(r'[^\w\s]', '', text) # punctuations and special characters removal
-    text = ' '.join([word for word in text.split() if word not in stop_words])
-    text = ' '.join([stemmer.stem(word) for word in text.split()])
-    text = ' '.join([lemmatizer.lemmatize(word) for word in text.split()])
+    text = re.sub(r'[^\w\s]', '', text) # special characters removal
+    text = ' '.join([word for word in text.split()
+                     if word not in stop_words])
+    text = ' '.join([stemmer.stem(word)
+                     for word in text.split()])
+    text = ' '.join([lemmatizer.lemmatize(word)
+                     for word in text.split()])
     return text
 
 def main():

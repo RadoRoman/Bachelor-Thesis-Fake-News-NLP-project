@@ -11,7 +11,7 @@ from liar_preprocess import load_liar_clean_csv
 from isot_preprocess import load_isot_clean_csv
 
 # df = load_liar_clean_csv() #LIAR Data-Set
-df = load_isot_clean_csv(7000) #ISOT Data-Set
+df = load_isot_clean_csv(8000) #ISOT Data-Set
 
 df = df.dropna()
 
